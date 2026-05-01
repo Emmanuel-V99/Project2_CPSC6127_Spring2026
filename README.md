@@ -64,3 +64,9 @@ TO RUN THE HADOOP MAPREDUCE PROGRAM WITH COMBINER
 hadoop jar "C:/hadoop/hadoop-3.3.6/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar" -file scripts/mapper.py -file scripts/reducer.py -file scripts/combiner.py -input "/emmanuel/cleaned_emails.txt" -output "/emmanuel/output" -mapper "python mapper.py" -reducer "python reducer.py" -combiner "python combiner.py"
 
 -Included "part-00000" within the output folder to provide you with a reference to how the output should look
+
+NOW, TO SEE THE TOP 15 MOST FREQUENTLY OCCURING WORDS FOUND FROM THE DATA WITHIN YOUR
+hadoop folder (emmanuel/output/part-00000),
+RUN THE FOLLOWING COMMAND:
+
+hdfs dfs -cat /emmanuel/output/part-00000 | python scripts\top_15_words.py --input - --top 15
