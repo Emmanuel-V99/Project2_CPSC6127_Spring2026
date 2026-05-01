@@ -1,0 +1,10 @@
+# Local datasets (do not commit large source/output files)
+data/*.csv
+data/*.txt
+
+# Local Python cache files
+__pycache__/
+*.pyc
+
+# Hadoop job success marker when copied locally
+output/_SUCCESS
