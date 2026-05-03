@@ -24,19 +24,10 @@ INSTRUCTIONS
 -Please use HDFS for Input/Output:
 If your goal is to process files using Hadoop’s distributed architecture, first place the files in HDFS, then reference them.
 
-Quick pre-run checklist (recommended each run):
-1. Confirm local preprocessed input is not empty:
+Before running hadoop program...
+Confirm local preprocessed input is not empty:
 python scripts\preprocess_enron.py
 powershell -Command "Get-Item .\data\cleaned_emails.txt | Select-Object Length,LastWriteTime"
-
-2. Replace the HDFS input file with the latest local file:
-hdfs dfs -test -e /emmanuel/cleaned_emails.txt
-hdfs dfs -rm /emmanuel/cleaned_emails.txt
-hdfs dfs -put "C:/Users/vande/OneDrive/Documents/Spring_2026_Semester/CPSC_6127_Contemporary_Issues_in_DB_Management_Systems/Project_2/data/cleaned_emails.txt" /emmanuel/
-hdfs dfs -ls /emmanuel
-
-3. Remove prior output directory before rerun:
-hdfs dfs -rm -r /emmanuel/output
 
 1. Upload your data file to HDFS
 Run these command in Command Prompt:
@@ -63,7 +54,13 @@ IF YOU ARE RE-RUNNING THE ABOVE COMMAND AGAIN, DELETE THE OUTPUT FOLDER FIRST: h
 TO RUN THE HADOOP MAPREDUCE PROGRAM WITH COMBINER
 hadoop jar "C:/hadoop/hadoop-3.3.6/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar" -file scripts/mapper.py -file scripts/reducer.py -file scripts/combiner.py -input "/emmanuel/cleaned_emails.txt" -output "/emmanuel/output" -mapper "python mapper.py" -reducer "python reducer.py" -combiner "python combiner.py"
 
--Included "part-00000" within the output folder to provide you with a reference to how the output should look
+TO VIEW A SNIPPET OF THE FILE FROM HDFS:
+hdfs dfs -cat /emmanuel/output/part-00000 | Select-Object -First 20
+
+OR USING THE HADOOP HEAD COMMAND:
+hdfs dfs -head /emmanuel/output/part-00000
+
+-Included "part-00000" within this project's output folder to provide you with a reference to how the output should look
 
 NOW, TO SEE THE TOP 15 MOST FREQUENTLY OCCURING WORDS FOUND FROM THE DATA WITHIN YOUR
 hadoop folder (emmanuel/output/part-00000),
